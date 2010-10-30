@@ -1,0 +1,11 @@
+MorseKit by Rob Fisher
+Uses cwtext by rsbohn
+http://sourceforge.net/projects/cwtext/
+
+Get started (on a Mac):
+sudo port install sox
+cd cwtext*
+make
+cd ..
+???
+
