@@ -1,0 +1,18 @@
+Implementation notes for MorseKit
+---------------------------------
+
+* koch_order
+
+This file is derived from the suggested order for learning the letters
+from http://codepractice.com/learning.html
+There are some special characters:
+
+<BT> "Break or pause" -...-
+Doesn't seem to be a character for this in cwtext
+
+<SK> "End of QSO" ...-.- (puppy power?)
+! in cwtext
+
+<AR> "End or message, over" .-.-.
+= in cwtext
+
