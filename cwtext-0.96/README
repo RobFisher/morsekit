@@ -1,0 +1,80 @@
+CWTEXT 0.96 README
+
+This is cwtext version 0.96. The software converts plain ASCII to 
+International Morse Code. This release includes three programs,
+
+cwtext: convert text to 'dotscii' - . -..- -
+cwpcm: convert text to PCM audio stream
+cwmm: convert to MorseMail XML format
+	see http://www.seanet.com/~harrypy/MorseMail/ for information
+	on this excellent program.
+
+License: GPL
+
+Binary installation:
+Just run 'make install' to install the programs to /usr/local/bin.
+To install elsewhere edit the makefile, change the prefix from
+/usr/local to whatever you like.
+
+Source installation:
+'make install' should build the programs and install to /usr/local/bin
+as above. This is a simple program and should work anywhere, as long
+as you have a reasonable CLIB. Python is only required if you want
+to change the symbol table.
+
+Uses of CWTEXT:
+
+cat message | cwtext | mail root@localhost -s "test message in morse code"
+	Convert local file 'message' to 'dotscii' and mail to root.
+
+finger @finger.kernel.org | cwpcm > /dev/dsp
+	Get the latest Linux kernel version numbers, convert to
+	morse and send to the sound card.
+
+cat COPYING | cwpcm -ss -f 800 -lowrez | sox -r 8000 -bu -t raw - copying.wav lowp 1800
+	Convert the text file COPYING to morse code in 'copying.wav'
+	audio file. The CW signal is at 800 Hz. Sox converts the audio
+	to a .wav file and applies low pass filter to eliminate key click.
+
+echo vvv | cwpcm -w 20 -F 24 -lowrez | dsp-lowpass
+	Test signal at 20 wpm, characters at 24 wpm. dsp-lowpass is a 
+	script that uses sox to filter key click and send the output
+	to /dev/dsp.
+
+cwpcm interface:
+-f FFFF to set the output frequency (40 to 3200 Hz)
+-w NN	to set the rate (WPM)
+-F NN	to set the character (Farnsworth) rate
+-v NN	to set the volume (0-100%)
+-lowrez output at 8000 samples/second (default is 44100)
+-d	debug: shows settings for speed, frequency and volume
+
+(classic interface - works for now but deprecated)
+-ss for slow code rate (5 wpm, characters at farnsworth 15 wpm)
+-sm for medium code rate (12 wpm, characters at 18 wpm)
+-sf for fast code rate (18 wpm)
+-sx for extra fast code rate (20 wpm)
+-f:FFFF to set the output frequency
+
+Version 0.96
+Added envelope support: no more keyclick!
+Prosign support: use *sk* for example.
+Default bitrate is now 44100. To get the old 8000 bitrate use -lowrez.
+
+Version 0.95
+NOW: you can set the WPM and Farnsworth rates to whatever you like!
+Set the volume to 0-100%. Volume greater than 90 may cause clipping.
+More accurate frequency generation (KC6HUR)
+Added test for frequency. If you need >2000Hz you will have to
+increase the bitrate accordingly. Set it to at least 4 times your 
+desired maximum frequency.
+
+NEW in 0.94
+Got the farnsworth timing right! Changed slow code rate to
+5 wpm with characters at 15 wpm.
+
+NEW in 0.93
+cwmm MorseMail converter.
+
+NEW in 0.92 for cwpcm
+-f:NNNN set the pitch to NNNN (40 to 3200) in Hz.

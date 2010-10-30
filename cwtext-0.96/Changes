@@ -1,0 +1,63 @@
+2007.01.07 version 0.96
+Submission from Steve Conklin:
+-Envelope support in cwpcm: raised cosine keying 
+	(no more clicking!!!)
+	Unsure of the implications for high speed, might
+	have to tune this above 20 WPM. See cwpcm.c.
+-Prosigns: use *ar* *sk* etc.
+	this works by turning off inter-character spaces
+
+New default bitrate: 44100
+	CD quality (mono) output. If you want the old 8000 
+	samples/second bitrate use the -lowrez option.
+
+cwmm supports -w and -F to set wpm and Farnsworth wpm.
+Moved the file processing into morse.c so it can be shared
+by all cw* programs. They all now call translate(in,out).
+
+
+
+2005.01.27
+Finally you can set the WPM rate and Farnsworth rate from the 
+command line. Also can set the volume. Accurate frequency
+generation, thanks to KC6HUR. These changes to cwpcm only,
+still need to add command line switches to cwmm.
+
+2003.06.19
+Changed the Farnsworth calculations, think I got it right this
+time. Thanks to Nake N0NB for help with that. Seems like lots
+of people are using cwpcm to create code practice CDs. That's
+great! Changed the slow speed (-ss) to 5 wpm with 15 wpm 
+characters. Had several requests for that. With the new
+Farnsworth code you should be able to change the speed
+to whatever you like (>= 5wpm though, I should force the 
+character rate to >= 5wpm too).
+I use the following to test the speed:
+python -c 'print ("paris "*$WPM)[:-1]' | ./cwpcm $SPEED | wc -c
+Should get 480000 +/- 4000.
+
+2003.02.28
+Added support for MorseMail http://www.seanet.com/~harrypy/MorseMail/
+via new executable, cwmm. Same speed switches as cwpcm.
+
+2002.08.01
+Added comma, corrected colon ---... (reported by KB8DNR)
+
+2001.10.22
+Tested the timing on cwpcm. Running slow, so I did a major
+rethinking on all the math. Turns out my original numbers were
+all wrong. Wound up reducing the 'half dit' size from 1666 microseconds
+to 1177 microseconds. Running 20*"paris " through cwpcm -sx and
+out to /dev/audio now takes 60+/-3 seconds, close enough I 
+suppose. I tried to correct the split timing as well. 
+The problem is that the characters are faster, so the overall
+time for a given phrase is less than the requested word rate.
+I tried w-(c-w)/w, which was too fast, so I tried w-2(c-w)/w.
+Still faster than requested, but I'm going with that for now.
+I counted 15 inter-character and word spaces for 36 character
+spaces in ".--. .- .-. .. ... " (paris ), perhaps 2.4 is the
+proper constant for the above formula.
+
+2001.10.11
+Got everything ready for the cwtext 0.90 beta and released
+a source tarball. Announced on Freshmeat on Oct 12.

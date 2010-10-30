@@ -1,0 +1,5 @@
+#!/bin/sh
+# Take audio on stdin, apply lowpass filter,
+# then pass it to /dev/dsp.
+# Use with cwpcm to remove key click.
+sox -r 8000 -but raw - -t raw /dev/dsp lowpass 1500

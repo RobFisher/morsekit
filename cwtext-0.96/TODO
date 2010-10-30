@@ -1,0 +1,12 @@
+CWTEXT 0.9 TODO
+
+Man pages for cwtext, cwpcm
+Wraper scripts for building .wav or .mp3 files
+(via sox etc)
+Revise coding scheme
+-table, -prosigns for cwtext (print morse table, prosigns)
+Submit your packaging files (for RPM, DEB, etc)
+
+Not TODO:
+automake
+autoconfig
