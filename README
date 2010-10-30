@@ -16,10 +16,16 @@ platform.
 
 So far:
 
-Get started (on a Mac):
+You need sox (for now at least)
+On Mac (with Macports):
 sudo port install sox
+
+On Ubuntu:
+sudo apt-get install sox
+
+On either system:
 cd cwtext-0.96
 make
 cd ..
-mactest.sh "Some text"
+python koch.py
 
