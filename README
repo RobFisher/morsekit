@@ -1,11 +1,25 @@
 MorseKit by Rob Fisher
+----------------------
+
 Uses cwtext by rsbohn
 http://sourceforge.net/projects/cwtext/
 
+The idea is to develop a suite of tools for generating morse
+code to practise with. Since I am learning Morse code with
+the Koch method, to start with I will make some scripts that
+generate words of various lengths with selected letters and
+play them out at a configurable speed. Later, a Python/Tk UI
+might be nice.
+
+Developing on a Mac, but ultimately this should work cross-
+platform.
+
+So far:
+
 Get started (on a Mac):
 sudo port install sox
-cd cwtext*
+cd cwtext-0.96
 make
 cd ..
-???
+mactest.sh "Some text"
 
