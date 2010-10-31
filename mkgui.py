@@ -1,14 +1,16 @@
+import os
 from Tkinter import *
+import koch
 
 class MkGui:
-    def init(__self__, __master):
+    def __init__(self, master):
         frame = Frame(master)
         frame.pack()
         self.button = Button(frame, text="Start", command=self.start)
         self.button.pack(side=RIGHT)
 
     def start(self):
-        os.system("./koch.py")
+        koch.startKoch(20)
 
 root = Tk()
 app = MkGui(root)

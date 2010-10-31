@@ -7,25 +7,27 @@ import os
 letters = "aiklmoprstuw"
 minWordLength = 1
 maxWordLength = 5
-numWords = 20
 
-random.seed()
+def startKoch(numWords):
+    random.seed()
+    operatingSystem = platform.system()
+    
+    for w in range (0, numWords):
+        wordLength = random.randrange(minWordLength, maxWordLength+1, 1)
+        word = ""
+        for x in range(0, wordLength):
+            letterIndex = random.randrange(0, len(letters), 1)
+            word += letters[letterIndex]
 
-operatingSystem = platform.system()
+        # The gaps between words are already a bit too big.
+        #word += " "
 
-for w in range (0, numWords):
-  wordLength = random.randrange(minWordLength, maxWordLength+1, 1)
-  word = ""
-  for x in range(0, wordLength):
-    letterIndex = random.randrange(0, len(letters), 1)
-    word += letters[letterIndex]
+        # TODO: hitting ctrl-c does not work too well here
+        if operatingSystem == "Darwin":
+            os.system("./mactest.sh " + word)
+        else:
+            os.system("./lintest.sh " + word)
 
-  # The gaps between words are already a bit too big.
-  #word += " "
 
-  # TODO: hitting ctrl-c does not work too well here
-  if operatingSystem == "Darwin":
-    os.system("./mactest.sh " + word)
-  else:
-    os.system("./lintest.sh " + word)
-
+if __name__ == "__main__":
+    startKoch(20)
