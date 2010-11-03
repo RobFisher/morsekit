@@ -1,16 +1,13 @@
-import sys
 import random
-import platform
-import os
 
 # TODO: configure these
-letters = "aiklmoprstuw"
 minWordLength = 1
 maxWordLength = 5
 
-def startKoch(numWords):
+def generateKochWords(numWords, letters):
     random.seed()
-    operatingSystem = platform.system()
+    
+    words = ""
     
     for w in range (0, numWords):
         wordLength = random.randrange(minWordLength, maxWordLength+1, 1)
@@ -18,16 +15,15 @@ def startKoch(numWords):
         for x in range(0, wordLength):
             letterIndex = random.randrange(0, len(letters), 1)
             word += letters[letterIndex]
+        if w != 0:
+            words += " "
+        words += word
 
-        # The gaps between words are already a bit too big.
-        #word += " "
-
-        # TODO: hitting ctrl-c does not work too well here
-        if operatingSystem == "Darwin":
-            os.system("./mactest.sh " + word)
-        else:
-            os.system("./lintest.sh " + word)
+    return words
 
 
 if __name__ == "__main__":
-    startKoch(20)
+    words = generateKochWords(5, "aiklmoprstuw")
+    import play
+    play.play(words)
+
