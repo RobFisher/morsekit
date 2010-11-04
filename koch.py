@@ -1,8 +1,6 @@
+import sys
 import random
-
-# TODO: configure these
-minWordLength = 1
-maxWordLength = 5
+import optparse
 
 # after X should be <BT> but don't know how to get that in cwtext. See NOTES.
 order = "KMRSUAPTLOWI.NJEF0Y,VG5/Q9ZH38B?427C1D6X!="
@@ -13,7 +11,7 @@ def getLetters(numLetters):
 def maxLetters():
     return len(order)
 
-def generateKochWords(numWords, letters):
+def generateKochWords(numWords, letters, minWordLength=1, maxWordLength=8):
     random.seed()
     
     words = ""
@@ -31,9 +29,25 @@ def generateKochWords(numWords, letters):
     return words
 
 
-if __name__ == "__main__":
-    letters = getLetters(12)
-    words = generateKochWords(5,letters)
+def main(argv=None):
+    if argv == None:
+        argv = sys.argv
+
+    parser = optparse.OptionParser()
+    parser.add_option('-n', '--numletters', action='store', type='int', default=2, help='Number of different letters to train with')
+    parser.add_option('-w', '--words', action='store', type='int', default=5, help='Number of words to play')
+    parser.add_option('--minwordlength', action='store', type='int', default=1, help='Minimum word length')
+    parser.add_option('--maxwordlength', action='store', type='int', default=8, help='Maximum word length')
+    parser.add_option('--letters', action='store', type='string', default=None, help='List of letters to train with')
+    (options, args) = parser.parse_args()
+
+    letters = options.letters
+    if letters == None:
+        letters = getLetters(options.numletters)
+
+    words = generateKochWords(options.words, letters, options.minwordlength, options.maxwordlength)
     import play
     play.play(words)
 
+if __name__ == "__main__":
+    main()
