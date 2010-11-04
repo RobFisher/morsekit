@@ -36,6 +36,8 @@ def main(argv=None):
     parser = optparse.OptionParser()
     parser.add_option('-n', '--numletters', action='store', type='int', default=2, help='Number of different letters to train with')
     parser.add_option('-w', '--words', action='store', type='int', default=5, help='Number of words to play')
+    parser.add_option('-s', '--speed', action='store', type='int', default=0, help='Speed in words per minute')
+    parser.add_option('-f', '--farnsworth', action='store', type='int', default=0, help='Farnsworth rate')
     parser.add_option('--minwordlength', action='store', type='int', default=1, help='Minimum word length')
     parser.add_option('--maxwordlength', action='store', type='int', default=8, help='Maximum word length')
     parser.add_option('--letters', action='store', type='string', default=None, help='List of letters to train with')
@@ -47,6 +49,12 @@ def main(argv=None):
 
     words = generateKochWords(options.words, letters, options.minwordlength, options.maxwordlength)
     import play
+    if options.speed > 0:
+        if options.farnsworth == 0:
+            play.setSpeed(options.speed)
+        else:
+            play.setSpeed(options.speed, options.farnsworth)
+            
     play.play(words)
 
 if __name__ == "__main__":

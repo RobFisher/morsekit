@@ -10,11 +10,14 @@ farnsworth = 15
 # TODO: call cwtext properly in a child process or something
 # that we can interactively kill before it completes
 
-def setSpeed(_speed, _farnsworth):
+def setSpeed(_speed, _farnsworth=0):
     global speed
     global farnsworth
     speed = _speed
-    farnsworth = _farnsworth
+    if _farnsworth == 0:
+        farnsworth = speed
+    else:
+        farnsworth = _farnsworth
 
 def play(words):
     # splits up words and plays them one at a time.
