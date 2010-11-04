@@ -1,6 +1,7 @@
 import sys
 import os
 import platform
+import optparse
 
 operatingSystem = platform.system()
 speed = 20
@@ -8,6 +9,12 @@ farnsworth = 15
 
 # TODO: call cwtext properly in a child process or something
 # that we can interactively kill before it completes
+
+def setSpeed(_speed, _farnsworth):
+    global speed
+    global farnsworth
+    speed = _speed
+    farnsworth = _farnsworth
 
 def play(words):
     # splits up words and plays them one at a time.
@@ -29,7 +36,13 @@ def playCharacters(characters):
 def main(argv=None):
     if argv == None:
         argv = sys.argv
-    play(argv[1])
+
+    parser = optparse.OptionParser()
+    parser.add_option('-s', '--speed', action='store', type='int', default=speed, help='Speed in words per minute')
+    parser.add_option('-f', '--farnsworth', action='store', type='int', default=farnsworth, help='Farnsworth rate')
+    (options, args) = parser.parse_args()
+    setSpeed(options.speed, options.farnsworth)
+    play(" ".join(args))
 
 if __name__ == "__main__":
     sys.exit(main())
