@@ -1,6 +1,7 @@
 import os
 from Tkinter import *
 import koch
+import play
 
 class MkGui:
     def __init__(self, master):
@@ -30,12 +31,13 @@ class MkGui:
 
         self.speedVar.set(15)
         self.farnsworthVar.set(20)
-        self.lettersVar.set(2)
-        
-        
+        self.lettersVar.set(2)       
 
     def start(self):
-        koch.startKoch(20)
+        self.letters = koch.getLetters(self.lettersVar.get())
+        self.words = koch.generateKochWords(1, self.letters)
+        play.setSpeed(self.speedVar.get(), self.farnsworthVar.get())
+        play.play(self.words)
 
 root = Tk()
 app = MkGui(root)
