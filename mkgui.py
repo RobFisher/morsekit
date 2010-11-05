@@ -26,16 +26,22 @@ class MkGui:
         self.lettersBox = Spinbox(frame, from_=2, to=koch.maxLetters(), increment=1, textvariable=self.lettersVar)
         self.lettersBox.grid(column=1, row=r)
         r = r + 1
+        self.wordsVar = IntVar()
+        self.wordsLabel = Label(frame, text="# Words")
+        self.wordsLabel.grid(column=0, row=r)
+        self.wordsBox = Spinbox(frame, from_=1, to=1000, increment=1, textvariable=self.wordsVar)
+        self.wordsBox.grid(column=1, row=r)
+        r = r + 1
         self.button = Button(frame, text="Start", command=self.start)
         self.button.grid(column=1, row=r)
 
         self.speedVar.set(15)
         self.farnsworthVar.set(20)
-        self.lettersVar.set(2)       
+        self.lettersVar.set(2)
 
     def start(self):
         self.letters = koch.getLetters(self.lettersVar.get())
-        self.words = koch.generateKochWords(1, self.letters)
+        self.words = koch.generateKochWords(self.wordsVar.get(), self.letters)
         play.setSpeed(self.speedVar.get(), self.farnsworthVar.get())
         play.play(self.words)
 
