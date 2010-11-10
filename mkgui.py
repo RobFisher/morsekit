@@ -54,6 +54,8 @@ class MkGui:
         self.answerText.pack()
         self.answerScrollbar.config(command=self.answerText.yview)
         r = r + 1
+        self.button = Button(frame, text="Stop", command=self.stop)
+        self.button.grid(column=0, row=r)
         self.button = Button(frame, text="Start", command=self.start)
         self.button.grid(column=1, row=r)
 
@@ -66,6 +68,9 @@ class MkGui:
         self.words = koch.generateKochWords(self.wordsVar.get(), self.letters)
         play.setSpeed(self.speedVar.get(), self.farnsworthVar.get())
         play.play(self.words, self.displayAnswer)
+
+    def stop(self):
+        play.stop()
 
     def displayAnswer(self):
         self.answerText.delete("1.0", END)

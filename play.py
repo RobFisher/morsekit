@@ -3,6 +3,7 @@ import os
 import platform
 import optparse
 import threading
+import subprocess
 
 operatingSystem = platform.system()
 speed = 20
@@ -33,9 +34,16 @@ def playCharacters(characters, callback=None):
         os.system('rm tmp.wav')
     else:
         command += ' -traw - -t raw /dev/dsp lowpass 1500'
-        os.system(command)
+        subprocess.Popen(command, shell=True)
     if callback != None:
         callback()
+
+def stop():
+    # this is brutal; maybe there is a better way
+    if operatingSystem == "Darwin":
+        subprocess.Popen('killall afplay', shell=True)
+    else:
+        subprocess.Popen('killall sox', shell=True)
 
 def main(argv=None):
     if argv == None:
