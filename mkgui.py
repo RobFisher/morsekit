@@ -64,6 +64,7 @@ class MkGui:
         self.lettersVar.set(2)
 
     def start(self):
+        self.entryText.delete("1.0", END)
         self.letters = koch.getLetters(self.lettersVar.get())
         self.words = koch.generateKochWords(self.wordsVar.get(), self.letters)
         play.setSpeed(self.speedVar.get(), self.farnsworthVar.get())
