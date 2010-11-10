@@ -2,6 +2,7 @@ import sys
 import os
 import platform
 import optparse
+import threading
 
 operatingSystem = platform.system()
 speed = 20
@@ -19,13 +20,11 @@ def setSpeed(_speed, _farnsworth=0):
     else:
         farnsworth = _farnsworth
 
-def play(words):
-    # splits up words and plays them one at a time.
-    wordList = words.split()
-    for word in wordList:
-        playCharacters(word)
+def play(characters, callback=None):
+    playThread = threading.Thread(target=playCharacters, args=(characters,callback,))
+    playThread.start()
 
-def playCharacters(characters):
+def playCharacters(characters, callback=None):
     command = 'echo "' + characters + '" | cwtext-0.96/cwpcm -w ' + str(speed) + ' -F ' + str(farnsworth) + ' -lowrez | sox -b8 -u -r8000'
     if operatingSystem == "Darwin":
         command += ' -traw - -t wav tmp.wav lowpass 1500'
@@ -35,6 +34,8 @@ def playCharacters(characters):
     else:
         command += ' -traw - -t raw /dev/dsp lowpass 1500'
         os.system(command)
+    if callback != None:
+        callback()
 
 def main(argv=None):
     if argv == None:
@@ -45,7 +46,7 @@ def main(argv=None):
     parser.add_option('-f', '--farnsworth', action='store', type='int', default=farnsworth, help='Farnsworth rate')
     (options, args) = parser.parse_args()
     setSpeed(options.speed, options.farnsworth)
-    play(" ".join(args))
+    playCharacters(" ".join(args))
 
 if __name__ == "__main__":
     sys.exit(main())
