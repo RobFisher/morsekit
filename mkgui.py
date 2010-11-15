@@ -2,6 +2,7 @@ import os
 from Tkinter import *
 import koch
 import play
+import score
 
 class MkGui:
     def __init__(self, master):
@@ -54,6 +55,9 @@ class MkGui:
         self.answerText.pack()
         self.answerScrollbar.config(command=self.answerText.yview)
         r = r + 1
+        self.resultLabel = Label(frame, text="")
+        self.resultLabel.grid(column=0, row=r, columnspan=2)
+        r = r + 1
         self.button = Button(frame, text="Stop", command=self.stop)
         self.button.grid(column=0, row=r)
         self.button = Button(frame, text="Start", command=self.start)
@@ -74,8 +78,10 @@ class MkGui:
         play.stop()
 
     def displayAnswer(self):
+        answerGiven = self.entryText.get("1.0", END)
+        comparison = score.compare(self.words, answerGiven)
         self.answerText.delete("1.0", END)
-        self.answerText.insert("1.0", self.words)
+        self.answerText.insert("1.0", score.makeComparisonString(comparison))
 
 root = Tk()
 app = MkGui(root)
