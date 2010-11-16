@@ -51,7 +51,8 @@ class MkGui:
         self.answerFrame.grid(column=0, columnspan=2, row=r, padx=20)
         self.answerScrollbar = Scrollbar(self.answerFrame, orient=VERTICAL)
         self.answerScrollbar.pack(side=RIGHT, fill=Y)
-        self.answerText = Text(self.answerFrame, wrap=WORD, height=5, yscrollcommand=self.answerScrollbar.set)
+        self.answerText = Text(self.answerFrame, wrap=WORD, height=5, takefocus=0, state=DISABLED,
+                               yscrollcommand=self.answerScrollbar.set)
         self.answerText.pack()
         self.answerScrollbar.config(command=self.answerText.yview)
         r = r + 1
@@ -62,7 +63,8 @@ class MkGui:
         self.analysisFrame.grid(column=0, columnspan=2, row=r, padx=20)
         self.analysisScrollbar = Scrollbar(self.analysisFrame, orient=VERTICAL)
         self.analysisScrollbar.pack(side=RIGHT, fill=Y)
-        self.analysisText = Text(self.analysisFrame, wrap=WORD, height=5, yscrollcommand=self.analysisScrollbar.set)
+        self.analysisText = Text(self.analysisFrame, wrap=WORD, height=5, state=DISABLED,
+                                 takefocus=0, yscrollcommand=self.analysisScrollbar.set)
         self.analysisText.pack()
         self.analysisScrollbar.config(command=self.analysisText.yview)
         r = r + 1
@@ -81,6 +83,13 @@ class MkGui:
 
     def start(self):
         self.entryText.delete("1.0", END)
+        self.answerText.config(state=NORMAL)
+        self.answerText.delete("1.0", END)
+        self.answerText.config(state=DISABLED)
+        self.analysisText.config(state=NORMAL)
+        self.analysisText.delete("1.0", END)
+        self.analysisText.config(state=DISABLED)
+        self.resultVar.set("")
         self.letters = koch.getLetters(self.lettersVar.get())
         self.words = koch.generateKochWords(self.wordsVar.get(), self.letters)
         play.setSpeed(self.speedVar.get(), self.farnsworthVar.get())
@@ -92,11 +101,13 @@ class MkGui:
     def displayAnswer(self):
         answerGiven = self.entryText.get("1.0", END)
         comparison = score.compare(self.words, answerGiven)
-        self.answerText.delete("1.0", END)
+        self.answerText.config(state=NORMAL)
         self.answerText.insert("1.0", self.words)
+        self.answerText.config(state=DISABLED)
         comparisonString = score.makeComparisonString(comparison)
-        self.analysisText.delete("1.0", END)
+        self.analysisText.config(state=NORMAL)
         self.analysisText.insert("1.0", comparisonString)
+        self.analysisText.config(state=DISABLED)
         mistakes = score.countMistakes(comparisonString)
         characters = len(self.words)
         percentage = int((float(characters - mistakes)/float(characters))*100)
