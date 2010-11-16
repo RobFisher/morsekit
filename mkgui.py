@@ -55,7 +55,19 @@ class MkGui:
         self.answerText.pack()
         self.answerScrollbar.config(command=self.answerText.yview)
         r = r + 1
-        self.resultLabel = Label(frame, text="")
+        self.analysisLabel = Label(frame, text="Analysis:")
+        self.analysisLabel.grid(column=0, row=r)
+        r = r + 1
+        self.analysisFrame = Frame(frame, borderwidth=2, relief=SUNKEN)
+        self.analysisFrame.grid(column=0, columnspan=2, row=r, padx=20)
+        self.analysisScrollbar = Scrollbar(self.analysisFrame, orient=VERTICAL)
+        self.analysisScrollbar.pack(side=RIGHT, fill=Y)
+        self.analysisText = Text(self.analysisFrame, wrap=WORD, height=5, yscrollcommand=self.analysisScrollbar.set)
+        self.analysisText.pack()
+        self.analysisScrollbar.config(command=self.analysisText.yview)
+        r = r + 1
+        self.resultVar = StringVar()
+        self.resultLabel = Label(frame, textvariable=self.resultVar)
         self.resultLabel.grid(column=0, row=r, columnspan=2)
         r = r + 1
         self.button = Button(frame, text="Stop", command=self.stop)
@@ -81,7 +93,16 @@ class MkGui:
         answerGiven = self.entryText.get("1.0", END)
         comparison = score.compare(self.words, answerGiven)
         self.answerText.delete("1.0", END)
-        self.answerText.insert("1.0", score.makeComparisonString(comparison))
+        self.answerText.insert("1.0", self.words)
+        comparisonString = score.makeComparisonString(comparison)
+        self.analysisText.delete("1.0", END)
+        self.analysisText.insert("1.0", comparisonString)
+        mistakes = score.countMistakes(comparisonString)
+        characters = len(self.words)
+        percentage = int((float(characters - mistakes)/float(characters))*100)
+        self.resultVar.set("Characters: " + str(len(self.words)) + " Mistakes: "
+                      + str(mistakes) + " Score: " + str(percentage) + "%")
+        
 
 root = Tk()
 app = MkGui(root)
