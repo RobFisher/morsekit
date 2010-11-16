@@ -1,9 +1,6 @@
 import sys
 import difflib
 
-text1 = "abccd"
-text2 = "abcd"
-
 def splitToLines(s):
     result = ""
     for n in range(0, len(s)):
@@ -46,10 +43,13 @@ def countMistakes(comparisonString):
     return mistakes
 
 def main():
-    comparison = compare(sys.argv[1], sys.argv[2])
-    cs = makeComparisonString(comparison)
-    print cs
-    print countMistakes(cs)
+    if len(sys.argv) == 3:
+        comparison = compare(sys.argv[1], sys.argv[2])
+        cs = makeComparisonString(comparison)
+        print cs
+        print "Mistakes: " + str(countMistakes(cs))
+    else:
+        print "Usage: score.py <correct answer> <answer given>"
 
 if __name__ == '__main__':
     main()
