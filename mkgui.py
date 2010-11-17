@@ -1,5 +1,6 @@
 import os
 from Tkinter import *
+import ConfigParser
 import koch
 import play
 import score
@@ -80,8 +81,10 @@ class MkGui:
         self.speedVar.set(15)
         self.farnsworthVar.set(20)
         self.lettersVar.set(2)
+        self.loadSettings()
 
     def start(self):
+        self.saveSettings()
         self.entryText.delete("1.0", END)
         self.answerText.config(state=NORMAL)
         self.answerText.delete("1.0", END)
@@ -113,8 +116,30 @@ class MkGui:
         percentage = int((float(characters - mistakes)/float(characters))*100)
         self.resultVar.set("Characters: " + str(len(self.words)) + " Mistakes: "
                       + str(mistakes) + " Score: " + str(percentage) + "%")
-        
 
+    def saveSettings(self):
+        config = ConfigParser.SafeConfigParser()
+        config.add_section('morse')
+        config.set('morse', 'speed', str(self.speedVar.get()))
+        config.set('morse', 'farnsworth', str(self.farnsworthVar.get()))
+        config.add_section('koch')
+        config.set('koch', 'letters', str(self.lettersVar.get()))
+        config.set('koch', 'words', str(self.wordsVar.get()))
+        with open('mkgui.cfg', 'wb') as configFile:
+            config.write(configFile)
+
+    def loadSettings(self):
+        config = ConfigParser.SafeConfigParser()
+        config.read('mkgui.cfg')
+        if config.has_option('morse', 'speed'):
+            self.speedVar.set(config.getint('morse', 'speed'))
+        if config.has_option('morse', 'farnsworth'):
+            self.farnsworthVar.set(config.getint('morse', 'farnsworth'))
+        if config.has_option('koch', 'letters'):
+            self.lettersVar.set(config.getint('koch', 'letters'))
+        if config.has_option('koch', 'words'):
+            self.wordsVar.set(config.getint('koch', 'words'))
+        
 root = Tk()
 app = MkGui(root)
 root.mainloop()

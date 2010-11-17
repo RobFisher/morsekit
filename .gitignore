@@ -4,4 +4,5 @@ cwtext-0.96/cwpcm
 cwtext-0.96/cwtext
 *.wav
 *.pyc
+mkgui.cfg
 
