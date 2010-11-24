@@ -5,4 +5,5 @@ cwtext-0.96/cwtext
 *.wav
 *.pyc
 mkgui.cfg
+dist/
 
