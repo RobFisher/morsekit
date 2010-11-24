@@ -26,7 +26,7 @@ def play(characters, callback=None):
     playThread.start()
 
 def playCharacters(characters, callback=None):
-    command = 'echo "' + characters + '" | cwtext-0.96/cwpcm -w ' + str(speed) + ' -F ' + str(farnsworth) + ' -lowrez | sox -b8 -u -r8000'
+    command = 'echo "' + characters + '" | cwtext-0.96/cwpcm -w ' + str(speed) + ' -F ' + str(farnsworth) + ' -lowrez | ./sox-14.3.1/sox -b8 -u -r8000'
     if operatingSystem == "Darwin":
         command += ' -traw - -t wav tmp.wav lowpass 1500'
         os.system(command)
