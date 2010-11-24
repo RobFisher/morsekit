@@ -9,7 +9,7 @@ from setuptools import setup
 
 APP = ['MorseKit.py']
 DATA_FILES = []
-OPTIONS = {'argv_emulation': True}
+OPTIONS = {'argv_emulation': True, 'resources': 'cwtext-0.96,sox-14.3.1'}
 
 setup(
     app=APP,
