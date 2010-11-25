@@ -1,0 +1,10 @@
+The macapp directory contains tools for creating a distributable app bundle
+that should work at least on Snow Leopard.
+
+Simply run ./macapp.sh and the bundle will be created by copying files.
+
+I have avoided using py2app for now because using OSX's built-in Python
+seems neater and I have not yet found a good reason not to.
+
+Py2app requires installing non-system Python with MacPorts. I can switch to
+this later if necessary.

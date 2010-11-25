@@ -1,0 +1,5 @@
+#!/bin/bash
+MORSEKIT_PATH=`dirname $0`
+echo $MORSEKIT_PATH
+cd $MORSEKIT_PATH
+python mkgui.py
