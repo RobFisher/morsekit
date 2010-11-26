@@ -28,10 +28,10 @@ def play(characters, callback=None):
 def playCharacters(characters, callback=None):
     command = 'echo "' + characters + '" | cwtext-0.96/cwpcm -w ' + str(speed) + ' -F ' + str(farnsworth) + ' -lowrez | ./sox-14.3.1/sox -b8 -u -r8000'
     if operatingSystem == "Darwin":
-        command += ' -traw - -t wav tmp.wav lowpass 1500'
+        command += ' -traw - -t wav /tmp/morsekit.wav lowpass 1500'
         os.system(command)
-        os.system('afplay tmp.wav')
-        os.system('rm tmp.wav')
+        os.system('afplay /tmp/morsekit.wav')
+        os.system('rm /tmp/morsekit.wav')
     else:
         command += ' -traw - -t raw /dev/dsp lowpass 1500'
         subprocess.Popen(command, shell=True)

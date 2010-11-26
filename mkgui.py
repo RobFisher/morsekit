@@ -125,8 +125,11 @@ class MkGui:
         config.add_section('koch')
         config.set('koch', 'letters', str(self.lettersVar.get()))
         config.set('koch', 'words', str(self.wordsVar.get()))
-        with open('mkgui.cfg', 'wb') as configFile:
-            config.write(configFile)
+        try:
+            with open('mkgui.cfg', 'wb') as configFile:
+                config.write(configFile)
+        except IOError:
+            pass
 
     def loadSettings(self):
         config = ConfigParser.SafeConfigParser()
