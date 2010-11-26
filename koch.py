@@ -55,7 +55,7 @@ def main(argv=None):
         else:
             play.setSpeed(options.speed, options.farnsworth)
             
-    play.play(words)
+    play.playCharacters(words)
     print words
 
 if __name__ == "__main__":
