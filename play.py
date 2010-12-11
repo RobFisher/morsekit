@@ -34,7 +34,7 @@ def playCharacters(characters, callback=None):
         os.system('rm tmp.wav')
     else:
         command += ' -traw - -t raw /dev/dsp lowpass 1500'
-        subprocess.Popen(command, shell=True)
+        os.system(command)
     if callback != None:
         callback()
 
